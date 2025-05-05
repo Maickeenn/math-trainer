@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Desafio de Matemática</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Desafio de Matemática</h1>
+        <div id="timer">Tempo restante: 10:00</div>
+        <div id="score">Acertos: 0 | Erros: 0</div>
+        <div id="question-box">
+            <p id="question-text">Clique em "Começar" para iniciar!</p>
+            <input type="number" id="answer" placeholder="Sua resposta" />
+            <button onclick="submitAnswer()">Responder</button>
+        </div>
+        <button id="start-button" onclick="startSession()">Começar Sessão</button>
+        <div id="feedback"></div>
+        <div id="review-section" style="display:none;">
+            <h2>Revisão</h2>
+            <table id="review-table">
+                <thead>
+                    <tr><th>#</th><th>Questão</th><th>Resposta Dada</th><th>Correta</th><th>Tempo</th><th>Resultado</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

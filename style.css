@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+#app {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+#timer, #score {
+    font-size: 18px;
+    margin: 10px 0;
+}
+#question-box {
+    margin: 20px 0;
+}
+input {
+    padding: 10px;
+    font-size: 16px;
+}
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-left: 10px;
+}
+#review-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#review-table th, #review-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
