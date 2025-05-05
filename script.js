@@ -6,6 +6,7 @@ let currentStartTime;
 let sessionData = [];
 let questoesGeradas = new Set();
 let nivelAtual = 'A1';
+let isPaused = false;
 
 const tempoIdealPorNivel = {
     'A1': 3, 'A2': 3,
@@ -22,6 +23,8 @@ function startSession() {
     questoesGeradas.clear();
     nivelAtual = 'A1';
     document.getElementById('start-button').style.display = 'none';
+    document.getElementById('pause-button').style.display = 'inline-block';
+    document.getElementById('stop-button').style.display = 'inline-block';
     document.getElementById('review-section').style.display = 'none';
     updateTimer();
     timerInterval = setInterval(() => {
@@ -157,6 +160,8 @@ function endSession() {
     clearInterval(timerInterval);
     document.getElementById('question-text').innerText = 'Sessão encerrada!';
     document.getElementById('start-button').style.display = 'block';
+    document.getElementById('pause-button').style.display = 'none';
+    document.getElementById('stop-button').style.display = 'none';
     showReview();
 }
 
@@ -183,3 +188,20 @@ document.getElementById('answer').addEventListener('keydown', function (e) {
         submitAnswer();
     }
 });
+
+function togglePause() {
+    const pauseBtn = document.getElementById('pause-button');
+    if (!isPaused) {
+        clearInterval(timerInterval);
+        isPaused = true;
+        pauseBtn.innerText = 'Continuar';
+    } else {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimer();
+            if (timeLeft <= 0) endSession();
+        }, 1000);
+        isPaused = false;
+        pauseBtn.innerText = 'Pausar';
+    }
+}

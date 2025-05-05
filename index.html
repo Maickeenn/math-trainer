@@ -11,11 +11,14 @@
         <div id="timer">Tempo restante: 10:00</div>
         <div id="score">Acertos: 0 | Erros: 0</div>
         <div id="question-box">
+            <label for="answer">Digite sua resposta:</label>
             <p id="question-text">Clique em "Começar" para iniciar!</p>
             <input type="number" id="answer" placeholder="Sua resposta" />
             <button onclick="submitAnswer()">Responder</button>
         </div>
         <button id="start-button" onclick="startSession()">Começar Sessão</button>
+        <button id="pause-button" onclick="togglePause()" style="display:none;">Pausar</button>
+        <button id="stop-button" onclick="endSession()" style="display:none;">Parar</button>
         <div id="feedback"></div>
         <div id="review-section" style="display:none;">
             <h2>Revisão</h2>
