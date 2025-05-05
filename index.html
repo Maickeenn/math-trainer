@@ -6,30 +6,50 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>Desafio de Matemática</h1>
-        <div id="timer">Tempo restante: 10:00</div>
-        <div id="score">Acertos: 0 | Erros: 0</div>
-        <div id="question-box">
-            <label for="answer">Digite sua resposta:</label>
-            <p id="question-text">Clique em "Começar" para iniciar!</p>
-            <input type="number" id="answer" placeholder="Sua resposta" />
-            <button onclick="submitAnswer()">Responder</button>
-        </div>
-        <button id="start-button" onclick="startSession()">Começar Sessão</button>
-        <button id="pause-button" onclick="togglePause()" style="display:none;">Pausar</button>
-        <button id="stop-button" onclick="endSession()" style="display:none;">Parar</button>
-        <div id="feedback"></div>
-        <div id="review-section" style="display:none;">
-            <h2>Revisão</h2>
-            <table id="review-table">
-                <thead>
-                    <tr><th>#</th><th>Questão</th><th>Resposta Dada</th><th>Correta</th><th>Tempo</th><th>Resultado</th></tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+<div id="app">
+    <h1>Desafio de Matemática</h1>
+
+    <div id="timer">Tempo restante: 10:00</div>
+    <div id="score">Acertos: 0 | Erros: 0</div>
+
+    <div id="question-box">
+        <p id="question-text">Clique em "Começar" para iniciar!</p>
+        <label for="answer" style="position: absolute; left: -9999px;">Digite sua resposta</label>
+        <input type="number" id="answer" placeholder="Sua resposta" />
+        <button onclick="submitAnswer()">Responder</button>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Botões de controle -->
+    <button id="start-button" onclick="startSession()">Começar Sessão</button>
+    <button id="pause-button" onclick="togglePause()" style="display:none;">Pausar</button>
+    <button id="stop-button" onclick="endSession()" style="display:none;">Parar</button>
+    <button onclick="mostrarHistorico()">Ver Histórico</button>
+
+    <!-- Feedback -->
+    <div id="feedback"></div>
+
+    <!-- Revisão pós-sessão -->
+    <div id="review-section" style="display:none;">
+        <h2>Revisão da Sessão</h2>
+        <table id="review-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Questão</th>
+                <th>Resposta Dada</th>
+                <th>Correta</th>
+                <th>Tempo</th>
+                <th>Resultado</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Histórico de sessões anteriores -->
+    <div id="historico-sessoes" style="margin-top: 20px;"></div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

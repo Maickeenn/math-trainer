@@ -1,12 +1,12 @@
 let timeLeft = 600;
 let timerInterval;
+let isPaused = false;
 let score = { acertos: 0, erros: 0 };
 let currentQuestion;
 let currentStartTime;
 let sessionData = [];
 let questoesGeradas = new Set();
 let nivelAtual = 'A1';
-let isPaused = false;
 
 const tempoIdealPorNivel = {
     'A1': 3, 'A2': 3,
@@ -27,12 +27,16 @@ function startSession() {
     document.getElementById('stop-button').style.display = 'inline-block';
     document.getElementById('review-section').style.display = 'none';
     updateTimer();
-    timerInterval = setInterval(() => {
+    timerInterval = setInterval(timerTick, 1000);
+    nextQuestion();
+}
+
+function timerTick() {
+    if (!isPaused) {
         timeLeft--;
         updateTimer();
         if (timeLeft <= 0) endSession();
-    }, 1000);
-    nextQuestion();
+    }
 }
 
 function updateTimer() {
@@ -110,7 +114,8 @@ function submitAnswer() {
         alert('Por favor, insira uma resposta.');
         return;
     }
-    const respostaDada = parseInt(document.getElementById('answer').value);
+
+    const respostaDada = parseInt(input);
     const tempoGasto = ((Date.now() - currentStartTime) / 1000).toFixed(1);
     const correta = respostaDada === currentQuestion.resposta;
 
@@ -156,13 +161,35 @@ function nivelAnterior(nivel) {
     return i > 0 ? niveis[i-1] : nivel;
 }
 
+function togglePause() {
+    const pauseBtn = document.getElementById('pause-button');
+    isPaused = !isPaused;
+    pauseBtn.innerText = isPaused ? 'Continuar' : 'Pausar';
+}
+
 function endSession() {
     clearInterval(timerInterval);
     document.getElementById('question-text').innerText = 'Sessão encerrada!';
     document.getElementById('start-button').style.display = 'block';
     document.getElementById('pause-button').style.display = 'none';
     document.getElementById('stop-button').style.display = 'none';
+    salvarSessao();
     showReview();
+}
+
+function salvarSessao() {
+    const novaSessao = {
+        id: new Date().toLocaleString(),
+        nivelInicial: 'A1',
+        nivelFinal: nivelAtual,
+        score: { ...score },
+        tempoTotal: 600 - timeLeft,
+        questoes: sessionData
+    };
+
+    const historico = JSON.parse(localStorage.getItem('todasAsSessoes')) || [];
+    historico.push(novaSessao);
+    localStorage.setItem('todasAsSessoes', JSON.stringify(historico));
 }
 
 function showReview() {
@@ -183,25 +210,45 @@ function showReview() {
     document.getElementById('review-section').style.display = 'block';
 }
 
+function mostrarHistorico() {
+    const historico = JSON.parse(localStorage.getItem('todasAsSessoes')) || [];
+    if (historico.length === 0) {
+        alert("Nenhuma sessão registrada.");
+        return;
+    }
+
+    let html = '<h3>Histórico de Sessões</h3><ul>';
+    historico.forEach((s, i) => {
+        html += `<li>
+            <button onclick="verSessao(${i})">Sessão ${i + 1} - ${s.id} | ${s.score.acertos}✅ ${s.score.erros}❌</button>
+        </li>`;
+    });
+    html += '</ul>';
+    document.getElementById('historico-sessoes').innerHTML = html;
+}
+
+function verSessao(index) {
+    const historico = JSON.parse(localStorage.getItem('todasAsSessoes')) || [];
+    const sessao = historico[index];
+    const tableBody = document.querySelector('#review-table tbody');
+    tableBody.innerHTML = '';
+    sessao.questoes.forEach((q, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i + 1}</td>
+            <td>${q.enunciado}</td>
+            <td>${q.respostaDada}</td>
+            <td>${q.respostaCorreta}</td>
+            <td>${q.tempo}s</td>
+            <td>${q.correta ? '✅' : '❌'}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+    document.getElementById('review-section').style.display = 'block';
+}
+
 document.getElementById('answer').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
         submitAnswer();
     }
 });
-
-function togglePause() {
-    const pauseBtn = document.getElementById('pause-button');
-    if (!isPaused) {
-        clearInterval(timerInterval);
-        isPaused = true;
-        pauseBtn.innerText = 'Continuar';
-    } else {
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            updateTimer();
-            if (timeLeft <= 0) endSession();
-        }, 1000);
-        isPaused = false;
-        pauseBtn.innerText = 'Pausar';
-    }
-}
