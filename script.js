@@ -100,6 +100,10 @@ function nextQuestion() {
 }
 
 function submitAnswer() {
+    if (input === '') {
+        alert('Por favor, insira uma resposta.');
+        return;
+    }
     const respostaDada = parseInt(document.getElementById('answer').value);
     const tempoGasto = ((Date.now() - currentStartTime) / 1000).toFixed(1);
     const correta = respostaDada === currentQuestion.resposta;
@@ -170,3 +174,9 @@ function showReview() {
     });
     document.getElementById('review-section').style.display = 'block';
 }
+
+document.getElementById('answer').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        submitAnswer();
+    }
+});
