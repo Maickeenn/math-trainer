@@ -21,7 +21,12 @@ function startSession() {
     score = { acertos: 0, erros: 0 };
     sessionData = [];
     questoesGeradas.clear();
-    nivelAtual = 'A1';
+    const historico = JSON.parse(localStorage.getItem('todasAsSessoes')) || [];
+    if (historico.length > 0) {
+        nivelAtual = historico[historico.length - 1].nivelFinal || 'A1';
+    } else {
+        nivelAtual = 'A1';
+    }
     document.getElementById('start-button').style.display = 'none';
     document.getElementById('pause-button').style.display = 'inline-block';
     document.getElementById('stop-button').style.display = 'inline-block';
@@ -230,6 +235,7 @@ function mostrarHistorico() {
 function verSessao(index) {
     const historico = JSON.parse(localStorage.getItem('todasAsSessoes')) || [];
     const sessao = historico[index];
+
     const tableBody = document.querySelector('#review-table tbody');
     tableBody.innerHTML = '';
     sessao.questoes.forEach((q, i) => {
