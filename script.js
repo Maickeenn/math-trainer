@@ -100,6 +100,9 @@ function nextQuestion() {
 }
 
 function submitAnswer() {
+    const inputEl = document.getElementById('answer');
+    const input = inputEl.value.trim();
+
     if (input === '') {
         alert('Por favor, insira uma resposta.');
         return;
