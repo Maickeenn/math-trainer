@@ -1,0 +1,19 @@
+{
+  "name": "math-trainer",
+  "version": "1.0.0",
+  "description": "Sistema adaptativo de treino matemático baseado no Kumon e Puzzle Rush.",
+  "type": "module",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest-environment-jsdom": "^29.7.0",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.3"
+  }
+}
