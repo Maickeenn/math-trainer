@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Desafio de Matemática</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <script type="module" crossorigin src="/math-trainer/assets/index-DFXFkbgY.js"></script>
+  <link rel="stylesheet" crossorigin href="/math-trainer/assets/index-DnHW4PCd.css">
+</head>
+<body>
+<div id="app">
+    <h1>Desafio de Matemática</h1>
+
+    <div id="timer">Tempo restante: 10:00</div>
+    <div id="score">Acertos: 0 | Erros: 0</div>
+
+    <div id="question-box">
+        <p id="question-text">Clique em "Começar" para iniciar!</p>
+        <label for="answer" style="position: absolute; left: -9999px;">Digite sua resposta</label>
+        <div id="answer-area" class="answer-area" style="display: none;">
+            <input id="answer" />
+            <button id="answer-button"><i class="fa fa-check"></i> Responder</button>
+        </div>
+    </div>
+
+    <!-- Botões de controle -->
+    <div class="button-group">
+        <button id="start-button"><i class="fa fa-play"></i> Começar Sessão</button>
+        <button id="history-button"><i class="fa fa-history"></i> Ver Histórico</button>
+        <button id="pause-button" style="display: none;"><i class="fa fa-pause"></i> Pausar</button>
+        <button id="stop-button" style="display: none;"><i class="fa fa-stop"></i> Parar</button>
+    </div>
+
+    <!-- Feedback -->
+    <div id="feedback"></div>
+
+    <!-- Revisão pós-sessão -->
+    <div id="review-section" style="display:none;">
+        <h2>Revisão da Sessão</h2>
+        <table id="review-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Questão</th>
+                <th>Resposta Dada</th>
+                <th>Correta</th>
+                <th>Tempo</th>
+                <th>Resultado</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Histórico de sessões anteriores -->
+    <div id="historico-sessoes" style="margin-top: 20px;"></div>
+</div>
+
+</body>
+</html>
